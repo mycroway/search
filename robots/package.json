@@ -20,7 +20,11 @@
     "algorithmia": "^0.3.10",
     "axios": "^0.21.1",
     "browser": "^0.2.6",
+    "dotenv": "^8.2.0",
     "googleapis": "^71.0.0",
-    "jsdom": "^16.5.2"
+    "jsdom": "^16.5.2",
+    "knex": "^0.95.4",
+    "mysql2": "^2.2.5",
+    "request": "^2.88.2"
   }
 }
