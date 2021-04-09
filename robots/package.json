@@ -1,0 +1,19 @@
+{
+  "name": "mycroway-serach",
+  "version": "1.0.0",
+  "description": "the robots of mycroway search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mycroway/search.git"
+  },
+  "author": "Theryston Santos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mycroway/search/issues"
+  },
+  "homepage": "https://github.com/mycroway/search#readme"
+}
