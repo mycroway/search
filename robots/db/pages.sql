@@ -5,5 +5,6 @@ CREATE TABLE `pages` (
   `text` longtext NOT NULL,
   `category` varchar(100) DEFAULT NULL,
   `safe` int(11) NOT NULL,
+  `revised` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

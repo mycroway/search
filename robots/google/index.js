@@ -47,7 +47,8 @@ module.exports = async (connection) => {
                   url: items[i].link,
                   html: body,
                   text: document.body.textContent,
-                  safe: 0
+                  safe: 0,
+                  revised: 0
                 }).then(async () => {
                   await connection('terms').update({
                     indexed: 1
