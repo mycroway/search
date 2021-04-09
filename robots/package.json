@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/mycroway/search/issues"
   },
-  "homepage": "https://github.com/mycroway/search#readme"
+  "homepage": "https://github.com/mycroway/search#readme",
+  "dependencies": {
+    "algorithmia": "^0.3.10",
+    "axios": "^0.21.1",
+    "browser": "^0.2.6",
+    "googleapis": "^71.0.0",
+    "jsdom": "^16.5.2"
+  }
 }
