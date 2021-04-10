@@ -58,7 +58,7 @@ module.exports = async (connection, algorithm) => {
     }
   }
   
-  setTimeout(main, 1000*60);
+  setTimeout(main, 1000*60*2);
 
   setInterval(main, 1000*60*30)
 }

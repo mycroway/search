@@ -46,7 +46,7 @@ module.exports = async (connection) => {
                 id: terms[indexTerm].id
               })
               
-              console.log(`google: houve um erro ao indexar a página ${items[i].link}`)
+              console.log(`google: a página ${items[i].link} foi indexada`)
             } catch (e) {
               console.log(`google: houve um erro ou indexar a página ${items[i].link}`)
             }
