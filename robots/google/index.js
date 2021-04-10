@@ -3,6 +3,7 @@ module.exports = async (connection) => {
   const jsdom = require("jsdom");
   const util = require('util')
   const fs = require('fs')
+  const indexer = require('../indexer/')
   const readFile = util.promisify(fs.readFile)
 
   const {
@@ -15,9 +16,8 @@ module.exports = async (connection) => {
 
   const googleSearchCredencials = require('../credentials/google-search.json');
 
-  setInterval(main, 1000*60*60*4)
-
   async function main() {
+    console.log('google: '+new Date())
     const terms = await connection('terms').select('*').where({
       indexed: 0
     })
@@ -35,38 +35,21 @@ module.exports = async (connection) => {
         const items = response.data.items.map(items => items)
 
         for (let i = 0; i < items.length; i++) {
-          var thisPage = pages.find(page => page.url == items[i].link)
+          var indexStatus = await indexer(items[i].link, connection)
 
-          if (!thisPage) {
-            request(items[i].link, async function (error, response, body) {
-              if (!error) {
-                const {
-                  document
-                } = (new JSDOM(body)).window
-                connection('pages').insert({
-                  title: items[i].title,
-                  url: items[i].link,
-                  html: body,
-                  text: document.body.textContent,
-                  safe: 0,
-                  revised: 0,
-                  category: terms[indexTerm].category
-                }).then(async () => {
-                  await connection('terms').update({
-                    indexed: 1
-                  }).where({
-                    id: terms[indexTerm].id
-                  })
-                  console.log(`google: a pagina ${items[i].link} foi indexada!`)
-                }).catch((error) => {
-                  console.log(`google: Houve um erro ou indexar a página ${items[i].link}`)
-                })
-              } else {
-                console.log(`google: Houve um erro ou acessar a página ${items[i].link}`)
-              }
-            });
-          } else {
-            console.log(`google: pagina duplicada`)
+          if (indexStatus != 'OK') {
+
+            try {
+              await connection('terms').update({
+                indexed: 1
+              }).where({
+                id: terms[indexTerm].id
+              })
+              
+              console.log(`google: houve um erro ao indexar a página ${items[i].link}`)
+            } catch (e) {
+              console.log(`google: houve um erro ou indexar a página ${items[i].link}`)
+            }
           }
         }
       }
@@ -77,5 +60,6 @@ module.exports = async (connection) => {
 
   main()
 
-  return 'OK'
+  setInterval(main, 1000*60*60*2)
+
 }
