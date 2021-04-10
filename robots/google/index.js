@@ -49,7 +49,8 @@ module.exports = async (connection) => {
                   html: body,
                   text: document.body.textContent,
                   safe: 0,
-                  revised: 0
+                  revised: 0,
+                  category: terms[indexTerm].category
                 }).then(async () => {
                   await connection('terms').update({
                     indexed: 1
