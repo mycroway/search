@@ -44,6 +44,7 @@ module.exports = async (connection) => {
                   document
                 } = (new JSDOM(body)).window
                 connection('pages').insert({
+                  title: items[i].title,
                   url: items[i].link,
                   html: body,
                   text: document.body.textContent,

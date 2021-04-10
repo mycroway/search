@@ -1,5 +1,6 @@
 CREATE TABLE `pages` (
   `id` int(50) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
   `url` text NOT NULL,
   `html` longtext NOT NULL,
   `text` longtext NOT NULL,
