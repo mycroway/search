@@ -52,6 +52,9 @@ module.exports = async (connection) => {
             }
           }
         }
+        if (indexTerm == terms.length-1) {
+          console.log('>>>>>>>google: mais um ciclo concluído')
+        }
       }
     } else {
       console.log('google: Sem termos no momento')

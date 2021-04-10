@@ -6,14 +6,11 @@ module.exports = async (connection, algorithm) => {
 
   async function main() {
     console.log('local: '+new Date())
-    const pages = await connection('pages').select('*').where({
-      revised: 0
-    })
+    const pages = await connection('pages').select('*').whereRaw('revised = 0')
 
     if (pages.length != 0) {
       var urls = []
       for (let i = 0; i < pages.length; i++) {
-
         const document = ((new jsdom(pages[i].html)).window).document
 
         try {
@@ -27,6 +24,12 @@ module.exports = async (connection, algorithm) => {
               })
             }
           }
+
+          await connection('pages').update({
+            revised: 1
+          }).where({
+            url: pages[i].url
+          })
         } catch (error) {
           console.log(`local: ouve um erro ao verificar os links da página ${pages[i].url}`)
         }
@@ -37,17 +40,15 @@ module.exports = async (connection, algorithm) => {
 
         if (indexStatus == 'OK') {
           try {
-            await connection('pages').update({
-              revised: 1
-            }).where({
-              url: urls[i].link
-            })
             console.log(`local: a página ${urls[i].link} foi indexada!`)
           } catch (e) {
             console.log(`local: Houve um erro ou indexar a página ${urls[i].link}`)
           }
         } else {
           console.log(`local: Houve um erro ou indexar a página ${urls[i].link}`)
+        }
+        if (i == urls.length-1) {
+          console.log('>>>>>>>local: mais um ciclo concluído')
         }
       }
 
@@ -57,5 +58,7 @@ module.exports = async (connection, algorithm) => {
     }
   }
   
-  main()
+  setTimeout(main, 1000*60);
+
+  setInterval(main, 1000*60*30)
 }
