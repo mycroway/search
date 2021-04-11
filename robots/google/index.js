@@ -19,7 +19,7 @@ module.exports = async (connection) => {
   async function main() {
     console.log('google: '+new Date())
     const terms = await connection('terms').select('*').where({
-      indexed: 0
+      revised: 0
     })
     if (terms.length != 0) {
       for (let indexTerm = 0; indexTerm < terms.length; indexTerm++) {
