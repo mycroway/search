@@ -35,21 +35,16 @@ module.exports = async (connection) => {
         const items = response.data.items.map(items => items)
 
         for (let i = 0; i < items.length; i++) {
-          var indexStatus = await indexer(items[i].link, connection)
+         await indexer(items[i].link, connection)
 
-          if (indexStatus != 'OK') {
-
-            try {
-              await connection('terms').update({
-                indexed: 1
-              }).where({
-                id: terms[indexTerm].id
-              })
-              
-              console.log(`google: a página ${items[i].link} foi indexada`)
-            } catch (e) {
-              console.log(`google: houve um erro ou indexar a página ${items[i].link}`)
-            }
+          try {
+            await connection('terms').update({
+              revised: 1
+            }).where({
+              id: terms[indexTerm].id
+            })
+          } catch (e) {
+            console.log(`google: houve um erro ou revisar a página ${items[i].link}`)
           }
         }
         if (indexTerm == terms.length-1) {

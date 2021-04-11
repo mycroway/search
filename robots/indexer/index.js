@@ -1,8 +1,6 @@
 module.exports = async (url, connection) => {
-  const request = require("request");
   const jsdom = require("jsdom").JSDOM;
-  const util = require('util')
-  const requestAsync = util.promisify(request)
+  const Crawler = require("crawler");
 
   const pages = await connection('pages').select('*').where({
     url: url
@@ -10,31 +8,54 @@ module.exports = async (url, connection) => {
 
   if (pages.length == 0) {
     try {
-      var res = await requestAsync(url)
 
-      if (!res.error) {
-        const document = ((new jsdom(res.body)).window).document
-        try {
-          await connection('pages').insert({
-            title: document.querySelector('title').textContent,
-            url: url,
-            html: res.body,
-            text: document.body.textContent,
-            safe: 0,
-            revised: 0
-          })
-          return 'OK'
-        } catch (error) {
-          return 'ERROR'
+      var c = new Crawler({
+        callback: async (error, res, done) => {
+          if (error) {
+            console.log(`indexer: houve um erro ou acessar a página ${url}`)
+          } else {
+            const $ = res.$;
+            const document = ((new jsdom(res.body)).window).document
+
+            var text = ''
+            const paragraphs = document.querySelectorAll('p')
+
+
+            for (let i = 0; i < paragraphs.length; i++) {
+              if (paragraphs[i].textContent.length >= 40) {
+                text += paragraphs[i].textContent+'\n'
+              }
+            }
+
+            try {
+              if (text.length != 0) {
+                await connection('pages').insert({
+                  title: $("title").text(),
+                  url: url,
+                  html: res.body,
+                  text: text,
+                  safe: 0,
+                  revised: 0
+                })
+                console.log(`indexer: a página ${url} foi indexada`)
+              }
+            } catch (error) {
+              console.log(`indexer: houve um erro ou indexar a página ${url}`)
+            }
+          }
+
+          done()
         }
-      } else {
-        return 'ERROR'
-      }
+      });
+
+      c.queue(url)
+
     } catch (e) {
-      return 'ERROR'
+      console.log(`indexer: houve um erro ou indexar a página ${url}`)
     }
   } else {
     console.log('indexer: já indexada!')
-    return 'ERROR'
   }
+
+  return 'OK'
 }
