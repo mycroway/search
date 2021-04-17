@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "algorithmia": "^0.3.10",
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "fuzzy-search": "^3.2.1",
+    "jsdom": "^16.5.3",
+    "knex": "^0.95.4",
+    "mysql2": "^2.2.5"
+  },
+  "name": "mycroway-search",
+  "version": "1.0.0",
+  "description": "the search engine of mycroway-search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mycroway/search.git"
+  },
+  "author": "Theryston Santos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mycroway/search/issues"
+  },
+  "homepage": "https://github.com/mycroway/search#readme"
+}

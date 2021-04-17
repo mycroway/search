@@ -19,6 +19,7 @@ module.exports = async (url, connection) => {
 
             var text = ''
             const paragraphs = document.querySelectorAll('p')
+            var tagsA = document.querySelectorAll('a')
 
 
             for (let i = 0; i < paragraphs.length; i++) {
@@ -35,7 +36,8 @@ module.exports = async (url, connection) => {
                   html: res.body,
                   text: text,
                   safe: 0,
-                  revised: 0
+                  revised: 0,
+                  linksAmount: tagsA.length
                 })
                 console.log(`indexer: a página ${url} foi indexada`)
               }
