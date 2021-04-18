@@ -50,6 +50,11 @@ ajv@^6.12.3:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+algorithmia-updated@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/algorithmia-updated/-/algorithmia-updated-1.0.0.tgz#e85bfbd9b097f2142dac8085038a625d482e78ca"
+  integrity sha512-xtvPxlI/gN5bJTaByfKdFj0/IR4vDtrtHr0t+FIwDFuQuLv0YMy2a3Qc7vZk3dfjYEoLV8wuhEgTGTSEz22WLA==
+
 algorithmia@^0.3.10:
   version "0.3.10"
   resolved "https://registry.yarnpkg.com/algorithmia/-/algorithmia-0.3.10.tgz#f71c20a9ff564660a4d1cf73947995d76de3450c"

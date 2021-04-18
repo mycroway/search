@@ -1,5 +1,8 @@
-import categorizer from './categorizer'
-import Connection from './db/connection'
+import ClassCreator from './class-creator';
+import Connection from './db/connection';
+import algorithmia from 'algorithmia';
+import algorithmiaKey from './credentials/algorithmia'
+const algorithm = algorithmia.client(algorithmiaKey)
 
 interface IConnection {
   host: string;
@@ -20,35 +23,36 @@ interface IResultsSearch {
   main: string;
 }
 
-interface ISearchEngine {
-  update(): Promise < string >;
-  search(term: string): IResultsSearch;
-}
-
-class searchEngine implements ISearchEngine {
-
-  connection: any
-  datas: any
-  table: ITable
+class searchEngine {
+  connection: any;
+  table: ITable;
+  datas: object[];
+  classCreator = new ClassCreator(algorithm);
 
   constructor (connection: IConnection, table: ITable, sort: string[]) {
     this.connection = Connection(connection)
     this.table = table
     this.update()
+    this.datas = [{}]
   }
 
   async update() {
-    this.datas = await this.connection('pages').select('*');
-    return 'OK'
+    try {
+      this.datas = await this.connection('pages').select('*');
+      this.classCreator.datas = this.datas
+      return 'OK'
+    } catch (e) {
+      return e
+    }
   }
 
-  search(term: string) {
-    return {
+  search(term: string): IResultsSearch[] {
+    return [{
       title: '',
       url: '',
       safe: 1,
       main: ''
-    }
+    }]
   }
 }
 

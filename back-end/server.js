@@ -8,4 +8,5 @@ var s = new searchEngine({
   name: 'pages',
   columns: ['text']
 }, ['safe', 'linksAmount'])
+
 console.log(s.search('ok'))
