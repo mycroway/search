@@ -1,18 +1,25 @@
-//import axios from 'axios';
+interface IDatas {
+  id: number;
+  title: string;
+  url: string;
+  text: string;
+  safe: number;
+  linksAmount: number;
+}
 
 class ClassCreator {
-  public datas: any[];
-  algorithm: object
+  datas: IDatas
 
-  constructor(algorithm: object) {
-    this.datas = [];
-    this.algorithm = algorithm
+  constructor(algorithm: any) {
+    this.datas = {
+      id: 0,
+      title: '',
+      url: '',
+      text: '',
+      safe: 0,
+      linksAmount: 0
+    }
   }
-
-  keyword() {
-    console.log(this.datas[0])
-  }
-
 }
 
 export default ClassCreator;

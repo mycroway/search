@@ -35,7 +35,7 @@ class searchEngine {
   dataProcessor = new DataProcessor();
 
 
-  constructor (connection: IConnection, sort: string[]) {
+  constructor(connection: IConnection, sort: string[]) {
     this.connection = Connection(connection)
     this.update()
     this.datas = [{
@@ -52,8 +52,7 @@ class searchEngine {
     try {
       this.datas = await this.connection('pages').select(`id`, `title`, `url`, `text`, `safe`, `linksAmount`);
       this.dataProcessor.datas = this.datas
-      this.classCreator.datas = this.dataProcessor.relevantData()
-      this.classCreator.keyword()
+      console.log(await this.dataProcessor.keyword(this.datas[0].text))
       return 'OK'
     } catch (e) {
       return e
