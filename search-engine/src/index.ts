@@ -1,4 +1,5 @@
 import ClassCreator from './class-creator';
+import DataProcessor from './data-processor';
 import Connection from './db/connection';
 import algorithmia from 'algorithmia';
 import algorithmiaKey from './credentials/algorithmia'
@@ -11,11 +12,6 @@ interface IConnection {
   database: string;
 }
 
-interface ITable {
-  name: string;
-  columns: string[];
-}
-
 interface IResultsSearch {
   title: string;
   url: string;
@@ -23,23 +19,41 @@ interface IResultsSearch {
   main: string;
 }
 
+interface IDatas {
+  id: number;
+  title: string;
+  url: string;
+  text: string;
+  safe: number;
+  linksAmount: number;
+}
+
 class searchEngine {
   connection: any;
-  table: ITable;
-  datas: object[];
+  datas: IDatas[];
   classCreator = new ClassCreator(algorithm);
+  dataProcessor = new DataProcessor();
 
-  constructor (connection: IConnection, table: ITable, sort: string[]) {
+
+  constructor (connection: IConnection, sort: string[]) {
     this.connection = Connection(connection)
-    this.table = table
     this.update()
-    this.datas = [{}]
+    this.datas = [{
+      id: 0,
+      title: '',
+      url: '',
+      text: '',
+      safe: 0,
+      linksAmount: 0
+    }]
   }
 
   async update() {
     try {
-      this.datas = await this.connection('pages').select('*');
-      this.classCreator.datas = this.datas
+      this.datas = await this.connection('pages').select(`id`, `title`, `url`, `text`, `safe`, `linksAmount`);
+      this.dataProcessor.datas = this.datas
+      this.classCreator.datas = this.dataProcessor.relevantData()
+      this.classCreator.keyword()
       return 'OK'
     } catch (e) {
       return e

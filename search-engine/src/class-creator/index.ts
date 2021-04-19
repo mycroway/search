@@ -8,6 +8,11 @@ class ClassCreator {
     this.datas = [];
     this.algorithm = algorithm
   }
+
+  keyword() {
+    console.log(this.datas[0])
+  }
+
 }
 
 export default ClassCreator;
