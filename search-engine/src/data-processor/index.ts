@@ -2,6 +2,8 @@ import algorithmia from 'algorithmia';
 import algorithmiaKey from '../credentials/algorithmia'
 const algorithm = algorithmia.client(algorithmiaKey)
 const textSummarizer = algorithm.algo("specrom/summarizer_bert_3_7_pytorch_1_4/0.2.0?timeout=300")
+const autoTag = algorithm.algo("nlp/AutoTag/1.0.1?timeout=300")
+
 
 interface IDatas {
   id: number;
@@ -33,8 +35,10 @@ class DataProcessor {
   }
 
   async keyword(text: string) {
-    text = await this.summarized(text)
-    return [text]
+    var newText = await this.summarized(text)
+    var keywords = await autoTag.pipe(newText)
+    var keywords = keywords.get()
+    return keywords
   }
 }
 

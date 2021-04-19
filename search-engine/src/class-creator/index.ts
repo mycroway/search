@@ -1,3 +1,6 @@
+import DataProcessor from '../data-processor';
+import BinarySearch from '../binary'
+
 interface IDatas {
   id: number;
   title: string;
@@ -7,18 +10,42 @@ interface IDatas {
   linksAmount: number;
 }
 
+interface IDatas {
+  id: number;
+  title: string;
+  url: string;
+  text: string;
+  safe: number;
+  linksAmount: number;
+  categoryId ? : number;
+}
+
 class ClassCreator {
-  datas: IDatas
+  datas: IDatas[]
 
   constructor(algorithm: any) {
-    this.datas = {
+    this.datas = [{
       id: 0,
       title: '',
       url: '',
       text: '',
       safe: 0,
       linksAmount: 0
-    }
+    }]
+  }
+
+  async create() {
+    var arr = (this.datas[0].text).split(' ').sort()
+    var index = BinarySearch.search(arr, '(Please')
+    return [{
+      id: 0,
+      title: 'string',
+      url: 'string',
+      text: 'string',
+      safe: 0,
+      linksAmount: 0,
+      categoryId: 0
+    }]
   }
 }
 

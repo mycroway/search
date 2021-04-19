@@ -26,6 +26,7 @@ interface IDatas {
   text: string;
   safe: number;
   linksAmount: number;
+  categoryId?: number;
 }
 
 class searchEngine {
@@ -52,7 +53,8 @@ class searchEngine {
     try {
       this.datas = await this.connection('pages').select(`id`, `title`, `url`, `text`, `safe`, `linksAmount`);
       this.dataProcessor.datas = this.datas
-      console.log(await this.dataProcessor.keyword(this.datas[0].text))
+      this.classCreator.datas = this.datas
+      this.datas = await this.classCreator.create()
       return 'OK'
     } catch (e) {
       return e

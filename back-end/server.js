@@ -6,4 +6,4 @@ var s = new searchEngine({
   database: 'mycrowaySearch'
 }, ['safe', 'linksAmount'])
 
-console.log(s.search('ok'))
+//console.log(s.search('ok'))
