@@ -4,9 +4,6 @@ var s = new searchEngine({
   user: 'root',
   password: 'Theryston10',
   database: 'mycrowaySearch'
-}, {
-  name: 'pages',
-  columns: ['text']
 }, ['safe', 'linksAmount'])
 
 console.log(s.search('ok'))
