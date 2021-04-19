@@ -35,8 +35,8 @@ class DataProcessor {
   }
 
   async keyword(text: string) {
-    var newText = await this.summarized(text)
-    var keywords = await autoTag.pipe(newText)
+    //var newText = await this.summarized(text)
+    var keywords = await autoTag.pipe(text)
     var keywords = keywords.get()
     return keywords
   }
