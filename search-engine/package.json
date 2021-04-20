@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc --watch",
-    "dev": "ts-node-dev src/index.ts"
+    "start": "tsc --watch"
   },
   "repository": "git+https://github.com/mycroway/search.git",
   "author": "Theryston Santos",
